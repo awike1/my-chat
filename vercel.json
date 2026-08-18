@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/api/tts/:path*", "destination": "/api/tts" }
+  ]
+}
