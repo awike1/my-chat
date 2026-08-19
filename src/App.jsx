@@ -4,14 +4,39 @@ import './App.css'
 const API_KEY = 'sk-449d101b4038498196db24a2a103012c'
 const API_URL = 'https://api.deepseek.com/v1/chat/completions'
 
+const DEFAULT_AVATARS = {
+  user: '🐱',
+  ai: '🤍'
+}
+
 export default function App() {
   const [messages, setMessages] = useState([
     { id: 0, role: 'ai', content: '宝宝来啦，哥哥在。' }
   ])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
+  const [avatars, setAvatars] = useState(() => {
+    const saved = localStorage.getItem('avatars')
+    return saved ? JSON.parse(saved) : {}
+  })
+  const [ids, setIds] = useState(() => {
+    const saved = localStorage.getItem('ids')
+    return saved ? JSON.parse(saved) : { user: '雯雯宝宝', ai: '哥哥' }
+  })
+  const [showEdit, setShowEdit] = useState(false)
+  const [editWhich, setEditWhich] = useState('user')
+  const [editId, setEditId] = useState('')
+  const [editUrl, setEditUrl] = useState('')
   const listRef = useRef(null)
   const bubbleRef = useRef('')
+
+  useEffect(() => {
+    localStorage.setItem('avatars', JSON.stringify(avatars))
+  }, [avatars])
+
+  useEffect(() => {
+    localStorage.setItem('ids', JSON.stringify(ids))
+  }, [ids])
 
   useEffect(() => {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight })
@@ -92,20 +117,59 @@ export default function App() {
     setLoading(false)
   }
 
+  function openEdit(which) {
+    setEditWhich(which)
+    setEditId(ids[which] || '')
+    setEditUrl(avatars[which] || '')
+    setShowEdit(true)
+  }
+
+  function saveEdit() {
+    const which = editWhich
+    setIds(prev => ({ ...prev, [which]: editId.trim() || (which === 'user' ? '雯雯宝宝' : '哥哥') }))
+    setAvatars(prev => ({ ...prev, [which]: editUrl.trim() }))
+    setShowEdit(false)
+  }
+
+  function avatarOf(role) {
+    return avatars[role] || DEFAULT_AVATARS[role]
+  }
+
   return (
     <div className="chat-page">
       <div className="header">
-        <span className="status">哥哥</span>
-        <span className="online">在线</span>
+        <div>
+          <div className="status">哥哥</div>
+          <div className="online">在线</div>
+        </div>
+        <div className="header-actions">
+          <span className="my-id">ID: {ids.user}</span>
+          <button className="edit-btn" onClick={() => openEdit('user')}>编辑资料</button>
+        </div>
       </div>
+
       <div className="chat-list" ref={listRef}>
         {messages.map(m => (
           <div key={m.id} className={`bubble-row ${m.role}`}>
-            <div className="bubble">{m.content}</div>
+            {m.role === 'ai' && (
+              <div className="avatar" onClick={() => openEdit('ai')}>
+                {avatarOf('ai').startsWith('http') ? < img src={avatarOf('ai')} alt="" /> : avatarOf('ai')}
+              </div>
+            )}
+            <div className="msg-group">
+              <div className="msg-id">{m.role === 'ai' ? ids.ai : ids.user}</div>
+              <div className="bubble">{m.content}</div>
+            </div>
+            {m.role === 'user' && (
+              <div className="avatar" onClick={() => openEdit('user')}>
+                {avatarOf('user').startsWith('http') ? < img src={avatarOf('user')} alt="" /> : avatarOf('user')}
+              </div>
+            )}
           </div>
         ))}
         {loading && !bubbleRef.current && <div className="typing">正在输入…</div>}
       </div>
+
       <div className="input-bar">
         <input
           value={input}
@@ -115,6 +179,32 @@ export default function App() {
         />
         <button onClick={send} disabled={loading}>发送</button>
       </div>
+
+      {showEdit && (
+        <div className="modal-mask" onClick={() => setShowEdit(false)}>
+          <div className="modal" onClick={e => e.stopPropagation()}>
+            <div className="modal-title">编辑{editWhich === 'user' ? '我的' : '哥哥的'}资料</div>
+            <label className="modal-label">ID</label>
+            <input
+              className="modal-input"
+              value={editId}
+              onChange={e => setEditId(e.target.value)}
+              placeholder="留空用默认"
+            />
+            <label className="modal-label">头像</label>
+            <input
+              className="modal-input"
+              value={editUrl}
+              onChange={e => setEditUrl(e.target.value)}
+              placeholder="粘贴图片链接，留空用默认emoji"
+            />
+            <div className="modal-btns">
+              <button onClick={() => setShowEdit(false)}>取消</button>
+              <button onClick={saveEdit}>保存</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
