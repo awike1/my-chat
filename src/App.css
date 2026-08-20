@@ -317,3 +317,4 @@ body {
   z-index: 99; white-space: nowrap;
 }
 .wx-row.user { flex-direction: row-reverse; }
+.wechat-placeholder { width: 24px; }
