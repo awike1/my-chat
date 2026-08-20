@@ -205,10 +205,12 @@ export default function App() {
       {/* ===== 微信：聊天列表 ===== */}
       {screen === 'wechat' && (
         <div className="wechat">
-          <div className="wechat-header">
-            <span className="wechat-title">微信</span>
-            <span className="wechat-plus" onClick={() => toast('后续做：发起聊天')}>＋</span>
-          </div>
+         <div className="wechat-header">
+  <span className="chat-back" onClick={() => setScreen('home')}>‹</span>
+  <span className="wechat-title">微信</span>
+  <span className="wechat-placeholder"></span>
+</div>
+
           <div className="chat-list-page">
             {chats.map(chat => (
               <div key={chat.id} className="chat-item" onClick={() => openChat(chat)}>
@@ -223,11 +225,12 @@ export default function App() {
               </div>
             ))}
           </div>
-          <div className="wechat-tab">
-            <div className="wechat-tab-btn active" onClick={() => toast('已经在微信啦')}>💬 微信</div>
-            <div className="wechat-tab-btn" onClick={() => setScreen('moments')}>📸 朋友圈</div>
-            <div className="wechat-tab-btn" onClick={() => setScreen('wechat-profile')}>👤 主页</div>
-          </div>
+         <div className="wechat-tab">
+  <div className="wechat-tab-btn active" onClick={() => toast('已经在微信啦')}>微信</div>
+  <div className="wechat-tab-btn" onClick={() => setScreen('moments')}>朋友圈</div>
+  <div className="wechat-tab-btn" onClick={() => setScreen('wechat-profile')}>主页</div>
+</div>
+
         </div>
       )}
 
