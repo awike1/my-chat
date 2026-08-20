@@ -1,25 +1,19 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+* { margin: 0; padding: 0; box-sizing: border-box; }
 body {
   background: #e8e3f0;
   font-family: system-ui, -apple-system, sans-serif;
 }
 
-/* ===== 手机容器 ===== */
 .phone-page {
   position: relative;
-  width: 100%;                     /* 关键：占满屏幕宽度 */
-  max-width: 480px;                /* 大屏上限，保持设计美感 */
+  max-width: 480px;
   margin: 0 auto;
   height: 100dvh;
   overflow: hidden;
   background: linear-gradient(160deg, #fdf2f8, #f3e8ff, #e8e3f0);
   display: flex;
   flex-direction: column;
+  width: 100%;   /* ← 新增：让宽度占满屏幕 */
 }
 
 /* ===== 首页 ===== */
@@ -27,348 +21,203 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 50px 16px 16px;          /* 减少顶部内边距，适配小屏 */
+  padding: 20px 20px 20px;   /* ← 修改：原先 60px 改为 20px */
   overflow-y: auto;
 }
 
 .home-widgets {
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 12px;
+  margin-bottom: 24px;
 }
 
 .widget {
-  background: rgba(255, 255, 255, 0.75);
+  background: rgba(255,255,255,.75);
   backdrop-filter: blur(10px);
-  border-radius: 18px;
-  padding: 12px;
-  box-shadow: 0 6px 20px rgba(180, 140, 200, 0.18);
+  border-radius: 20px;
+  padding: 14px;
+  box-shadow: 0 6px 20px rgba(180,140,200,.18);
 }
 
 .widget-photo { flex: 1.4; }
-.widget-calendar {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
+.widget-calendar { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; }
 
-.widget-title {
-  font-size: 11px;
-  color: #9a7ba8;
-}
-
+.widget-title { font-size: 12px; color: #9a7ba8; }
 .photo-placeholder {
-  margin-top: 6px;
-  width: 100%;
-  height: 80px;
+  margin-top: 8px;
+  width: 100%; height: 90px;
   background: linear-gradient(135deg, #ffd6e8, #ffb3cd);
   border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 34px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 40px;
 }
 
-.cal-month {
-  font-size: 12px;
-  color: #9a7ba8;
-}
-.cal-day {
-  font-size: 34px;                 /* 稍减小，适配小屏 */
-  font-weight: 700;
-  color: #5a3b6d;
-  line-height: 1.1;
-}
-.cal-week {
-  font-size: 12px;
-  color: #c48fa3;
-}
+.cal-month { font-size: 13px; color: #9a7ba8; }
+.cal-day { font-size: 38px; font-weight: 700; color: #5a3b6d; line-height: 1.1; }
+.cal-week { font-size: 13px; color: #c48fa3; }
 
-/* ===== 应用网格 ===== */
 .app-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 18px 10px;                  /* 间距收窄 */
-  padding: 4px 2px;
+  gap: 22px 12px;
+  padding: 6px 4px;
 }
 
 .app-icon {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
   cursor: pointer;
 }
 
 .icon-bg {
-  width: 54px;
-  height: 54px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  width: 58px; height: 58px;
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+  box-shadow: 0 6px 16px rgba(0,0,0,.12);
 }
 
-.app-name {
-  font-size: 11px;
-  color: #5a4a68;
-  font-weight: 500;
-}
+.app-name { font-size: 12px; color: #5a4a68; font-weight: 500; }
 
-/* ===== 底部 Dock ===== */
 .home-dock {
   margin-top: auto;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.8);
+  display: flex; justify-content: space-around; align-items: center;
+  background: rgba(255,255,255,.8);
   backdrop-filter: blur(12px);
-  border-radius: 22px;
-  padding: 10px 6px;
-  box-shadow: 0 -4px 20px rgba(180, 140, 200, 0.15);
+  border-radius: 24px;
+  padding: 12px 8px;
+  box-shadow: 0 -4px 20px rgba(180,140,200,.15);
 }
 
 .dock-btn {
-  font-size: 12px;
-  color: #7a5a8a;
-  font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 14px;
+  font-size: 13px; color: #7a5a8a; font-weight: 600;
+  padding: 8px 14px; border-radius: 16px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 4px;
+  display: flex; align-items: center; gap: 4px;
 }
 
 .dock-home {
   background: linear-gradient(135deg, #ffb3cd, #ff9ec2);
   color: #fff;
-  padding: 8px 18px;
-  border-radius: 18px;
-  box-shadow: 0 4px 14px rgba(255, 158, 194, 0.4);
+  padding: 10px 22px;
+  border-radius: 20px;
+  box-shadow: 0 4px 14px rgba(255,158,194,.4);
 }
 
-/* ===== 主页（个人资料） ===== */
+/* ===== 主页 ===== */
 .profile {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 24px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 30px;
 }
 
 .profile-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
 }
 
 .profile-avatar {
-  width: 100px;
-  height: 100px;
+  width: 110px; height: 110px;
   border-radius: 50%;
   background: linear-gradient(135deg, #ffd6e8, #ffb3cd);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 50px;
-  box-shadow: 0 10px 30px rgba(255, 158, 194, 0.4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 56px;
+  box-shadow: 0 10px 30px rgba(255,158,194,.4);
 }
 
 .profile-name {
-  font-size: 20px;
-  font-weight: 700;
-  color: #5a3b6d;
+  font-size: 22px; font-weight: 700; color: #5a3b6d;
   cursor: pointer;
-  padding: 4px 14px;
+  padding: 6px 16px;
   border-bottom: 2px dashed #ffb3cd;
 }
 
-.profile-tip {
-  font-size: 11px;
-  color: #b08a9c;
-}
+.profile-tip { font-size: 12px; color: #b08a9c; }
 
-/* ===== 通用页面 ===== */
+/* ===== 通用 ===== */
 .simple-page {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 16px;
 }
 
-.simple-page h2 { color: #5a3b6d; font-size: 20px; }
-.simple-page p {
-  color: #9a7ba8;
-  font-size: 13px;
-}
+.simple-page h2 { color: #5a3b6d; }
+.simple-page p { color: #9a7ba8; font-size: 14px; }
 
 .back-btn {
   border: none;
-  background: #ff9ec2;
-  color: #fff;
-  font-size: 13px;
-  font-weight: 600;
-  padding: 8px 20px;
-  border-radius: 18px;
+  background: #ff9ec2; color: #fff;
+  font-size: 14px; font-weight: 600;
+  padding: 10px 24px; border-radius: 20px;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(255, 158, 194, 0.4);
+  box-shadow: 0 4px 14px rgba(255,158,194,.4);
 }
 
 /* ===== 弹窗 ===== */
 .modal-mask {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.35);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.35);
+  display: flex; align-items: center; justify-content: center;
   z-index: 50;
 }
 
 .modal {
-  width: 280px;
-  background: #fff;
-  border-radius: 18px;
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  width: 300px; background: #fff; border-radius: 18px;
+  padding: 20px;
+  display: flex; flex-direction: column; gap: 12px;
 }
 
-.modal-title {
-  font-size: 15px;
-  font-weight: 700;
-  color: #5a3b6d;
-}
+.modal-title { font-size: 16px; font-weight: 700; color: #5a3b6d; }
 
 .modal-input {
-  border: 1px solid #f0d5e0;
-  outline: none;
-  border-radius: 12px;
-  padding: 8px 12px;
-  font-size: 13px;
+  border: 1px solid #f0d5e0; outline: none;
+  border-radius: 12px; padding: 10px 12px; font-size: 14px;
 }
 
-.modal-btns {
-  display: flex;
-  gap: 8px;
-  justify-content: flex-end;
-}
+.modal-btns { display: flex; gap: 10px; justify-content: flex-end; }
 
 .modal-btns button {
-  border: none;
-  border-radius: 12px;
-  padding: 6px 14px;
-  font-size: 12px;
-  cursor: pointer;
+  border: none; border-radius: 14px; padding: 8px 16px;
+  font-size: 13px; cursor: pointer;
 }
 
-.modal-btns button:first-child {
-  background: #f3e8f5;
-  color: #a87b90;
-}
-.modal-btns button:last-child {
-  background: #ff9ec2;
-  color: #fff;
-}
+.modal-btns button:first-child { background: #f3e8f5; color: #a87b90; }
+.modal-btns button:last-child { background: #ff9ec2; color: #fff; }
 
 /* ===== 微信 ===== */
-.wechat {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  background: #f7f7f7;
-}
+.wechat { flex: 1; display: flex; flex-direction: column; background: #f7f7f7; }
 
 .wechat-header {
-  padding: 12px 14px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  padding: 16px;
+  display: flex; align-items: center; justify-content: space-between;
   background: #ededed;
 }
 .wechat-placeholder { width: 24px; }
-.wechat-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: #1a1a1a;
-}
+.wechat-title { font-size: 20px; font-weight: 700; color: #1a1a1a; }
 
-.chat-list-page {
-  flex: 1;
-  overflow-y: auto;
-  padding: 2px 0;
-}
+.chat-list-page { flex: 1; overflow-y: auto; padding: 4px 0; }
 .chat-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
-  background: #fff;
-  border-bottom: 1px solid #f0f0f0;
-  cursor: pointer;
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px; background: #fff;
+  border-bottom: 1px solid #f0f0f0; cursor: pointer;
 }
 .chat-item-avatar {
-  width: 42px;
-  height: 42px;
-  border-radius: 8px;
+  width: 46px; height: 46px; border-radius: 8px;
   background: #e8e8e8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; flex-shrink: 0;
 }
 .chat-item-body { flex: 1; min-width: 0; }
-.chat-item-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.chat-item-name {
-  font-size: 14px;
-  font-weight: 600;
-  color: #1a1a1a;
-}
-.chat-item-time {
-  font-size: 10px;
-  color: #b0b0b0;
-}
-.chat-item-last {
-  font-size: 12px;
-  color: #999;
-  margin-top: 2px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+.chat-item-top { display: flex; justify-content: space-between; align-items: center; }
+.chat-item-name { font-size: 15px; font-weight: 600; color: #1a1a1a; }
+.chat-item-time { font-size: 11px; color: #b0b0b0; }
+.chat-item-last { font-size: 13px; color: #999; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 .wechat-tab {
-  display: flex;
-  justify-content: space-around;
-  background: #f7f7f7;
-  border-top: 1px solid #e5e5e5;
-  padding: 4px 0 calc(6px + env(safe-area-inset-bottom));
+  display: flex; justify-content: space-around;
+  background: #f7f7f7; border-top: 1px solid #e5e5e5;
+  padding: 6px 0 calc(8px + env(safe-area-inset-bottom));
 }
-.wechat-tab-btn {
-  font-size: 11px;
-  color: #999;
-  padding: 4px 14px;
-  cursor: pointer;
-}
-.wechat-tab-btn.active {
-  color: #07c160;
-  font-weight: 600;
-}
+.wechat-tab-btn { font-size: 12px; color: #999; padding: 6px 18px; cursor: pointer; }
+.wechat-tab-btn.active { color: #07c160; font-weight: 600; }
 
 /* ===== 聊天窗口 ===== */
 .chat-window {
@@ -381,491 +230,95 @@ body {
 }
 
 .chat-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 12px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 12px;
   background: #ededed;
 }
-.chat-back {
-  font-size: 22px;
-  color: #1a1a1a;
-  cursor: pointer;
-  padding: 0 6px;
-}
-.chat-title {
-  font-size: 15px;
-  font-weight: 600;
-  color: #1a1a1a;
-}
-.chat-more {
-  font-size: 18px;
-  color: #1a1a1a;
-  cursor: pointer;
-  padding: 0 6px;
-}
+.chat-back { font-size: 24px; color: #1a1a1a; cursor: pointer; padding: 0 8px; }
+.chat-title { font-size: 16px; font-weight: 600; color: #1a1a1a; }
+.chat-more { font-size: 20px; color: #1a1a1a; cursor: pointer; padding: 0 8px; }
 
-.chat-msgs {
-  flex: 1;
-  overflow-y: auto;
-  padding: 12px 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
+.chat-msgs { flex: 1; overflow-y: auto; padding: 14px 12px; display: flex; flex-direction: column; gap: 10px; }
 
-.wx-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 6px;
-}
+.wx-row { display: flex; align-items: flex-start; gap: 8px; }
 .wx-row.ai { justify-content: flex-start; }
-.wx-row.user {
-  flex-direction: row-reverse;
-  justify-content: flex-start;
-}
+.wx-row.user { flex-direction: row-reverse; justify-content: flex-start; }
 
 .wx-avatar {
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
+  width: 32px; height: 32px; border-radius: 6px;
   background: #e8e8e8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 15px;
-  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px; flex-shrink: 0;
 }
 .wx-bubble {
-  max-width: 72%;
-  padding: 6px 10px;
+  max-width: 68%;
+  padding: 8px 11px;
   border-radius: 10px;
-  font-size: 12px;
-  line-height: 1.4;
+  font-size: 13px; line-height: 1.45;
   word-break: break-word;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 2px rgba(0,0,0,.05);
 }
-.wx-row.user .wx-bubble {
-  background: #95ec69;
-  color: #1a1a1a;
-}
-.wx-row.ai .wx-bubble {
-  background: #fff;
-  color: #1a1a1a;
-}
+.wx-row.user .wx-bubble { background: #95ec69; color: #1a1a1a; }
+.wx-row.ai .wx-bubble { background: #fff; color: #1a1a1a; }
 
 .wx-input-bar {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
   background: #f7f7f7;
 }
-.wx-icon {
-  font-size: 20px;
-  color: #1a1a1a;
-  cursor: pointer;
-  padding: 2px;
-}
+.wx-icon { font-size: 22px; color: #1a1a1a; cursor: pointer; padding: 4px; }
 .wx-input {
-  flex: 1;
-  border: none;
-  outline: none;
-  border-radius: 6px;
-  padding: 7px 10px;
-  font-size: 13px;
-  background: #fff;
+  flex: 1; border: none; outline: none; border-radius: 6px;
+  padding: 9px 12px; font-size: 14px; background: #fff;
 }
-.wx-send {
-  border: none;
-  background: #07c160;
-  color: #fff;
-  font-size: 12px;
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-}
+.wx-send { border: none; background: #07c160; color: #fff; font-size: 13px; padding: 8px 14px; border-radius: 6px; cursor: pointer; }
 
 .voice-bar {
   text-align: center;
-  padding: 14px;
-  font-size: 13px;
-  color: #666;
+  padding: 16px;
+  font-size: 14px; color: #666;
   background: #f7f7f7;
-  border-radius: 8px;
-  margin: 0 8px calc(6px + env(safe-area-inset-bottom));
+  border-radius: 8px; margin: 0 10px calc(8px + env(safe-area-inset-bottom));
   user-select: none;
 }
 .wx-voice-toggle {
-  position: absolute;
-  bottom: calc(8px + env(safe-area-inset-bottom));
-  right: 8px;
-  font-size: 16px;
-  cursor: pointer;
-  z-index: 5;
+  position: absolute; bottom: calc(10px + env(safe-area-inset-bottom)); right: 10px;
+  font-size: 18px; cursor: pointer; z-index: 5;
 }
 
 .plus-menu {
-  position: absolute;
-  bottom: calc(52px + env(safe-area-inset-bottom));
-  left: 8px;
-  background: #fff;
-  border-radius: 12px;
-  padding: 8px;
-  display: flex;
-  gap: 12px;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
-  z-index: 30;
+  position: absolute; bottom: calc(58px + env(safe-area-inset-bottom)); left: 10px;
+  background: #fff; border-radius: 12px;
+  padding: 10px;
+  display: flex; gap: 14px;
+  box-shadow: 0 6px 24px rgba(0,0,0,.15); z-index: 30;
 }
-.plus-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  cursor: pointer;
-}
+.plus-item { display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
 .plus-icon {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: #f0f0f0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
+  width: 42px; height: 42px; border-radius: 50%;
+  background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 20px;
 }
-.plus-item span {
-  font-size: 10px;
-  color: #666;
-}
+.plus-item span { font-size: 11px; color: #666; }
 
 .more-menu {
-  position: absolute;
-  top: 48px;
-  right: 8px;
-  background: #fff;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
-  z-index: 30;
+  position: absolute; top: 52px; right: 10px;
+  background: #fff; border-radius: 12px; overflow: hidden;
+  box-shadow: 0 6px 24px rgba(0,0,0,.15); z-index: 30;
 }
-.more-item {
-  padding: 10px 16px;
-  font-size: 13px;
-  color: #333;
-  border-bottom: 1px solid #f0f0f0;
-  cursor: pointer;
-}
+.more-item { padding: 12px 20px; font-size: 14px; color: #333; border-bottom: 1px solid #f0f0f0; cursor: pointer; }
 .more-item:last-child { border-bottom: none; }
 
-.bg-options {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.bg-option {
-  width: 46px;
-  height: 46px;
-  border-radius: 10px;
-  cursor: pointer;
-  border: 2px solid transparent;
-}
+.bg-options { display: flex; gap: 10px; flex-wrap: wrap; }
+.bg-option { width: 52px; height: 52px; border-radius: 10px; cursor: pointer; border: 2px solid transparent; }
 .bg-option:active { border-color: #07c160; }
 .modal-cancel {
-  border: none;
-  background: #f0f0f0;
-  color: #666;
-  font-size: 12px;
-  padding: 6px;
-  border-radius: 10px;
-  cursor: pointer;
-  margin-top: 4px;
+  border: none; background: #f0f0f0; color: #666;
+  font-size: 13px; padding: 8px; border-radius: 10px; cursor: pointer; margin-top: 4px;
 }
 
 .toast {
-  position: fixed;
-  bottom: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.7);
-  color: #fff;
-  font-size: 12px;
-  padding: 6px 14px;
-  border-radius: 14px;
-  z-index: 99;
-  white-space: nowrap;
-}
-
-/* ============================================================
-   📱 小屏适配（宽度 ≤ 400px）
-   ============================================================ */
-@media (max-width: 400px) {
-  .home {
-    padding: 40px 12px 12px;
-  }
-
-  .home-widgets {
-    gap: 8px;
-    margin-bottom: 16px;
-  }
-
-  .widget {
-    padding: 10px;
-    border-radius: 16px;
-  }
-
-  .widget-title {
-    font-size: 10px;
-  }
-
-  .photo-placeholder {
-    height: 64px;
-    font-size: 28px;
-    border-radius: 12px;
-  }
-
-  .cal-day {
-    font-size: 28px;
-  }
-  .cal-month,
-  .cal-week {
-    font-size: 11px;
-  }
-
-  .app-grid {
-    gap: 14px 8px;
-  }
-
-  .icon-bg {
-    width: 46px;
-    height: 46px;
-    font-size: 22px;
-    border-radius: 12px;
-  }
-
-  .app-name {
-    font-size: 10px;
-  }
-
-  .home-dock {
-    padding: 8px 4px;
-    border-radius: 18px;
-  }
-
-  .dock-btn {
-    font-size: 11px;
-    padding: 4px 10px;
-  }
-
-  .dock-home {
-    padding: 6px 14px;
-    font-size: 11px;
-  }
-
-  /* 个人资料 */
-  .profile-avatar {
-    width: 80px;
-    height: 80px;
-    font-size: 40px;
-  }
-
-  .profile-name {
-    font-size: 17px;
-  }
-
-  /* 微信 */
-  .wechat-header {
-    padding: 10px 12px;
-  }
-  .wechat-title {
-    font-size: 16px;
-  }
-
-  .chat-item {
-    padding: 8px 12px;
-    gap: 8px;
-  }
-  .chat-item-avatar {
-    width: 36px;
-    height: 36px;
-    font-size: 18px;
-  }
-  .chat-item-name {
-    font-size: 13px;
-  }
-  .chat-item-last {
-    font-size: 11px;
-  }
-
-  .wechat-tab-btn {
-    font-size: 10px;
-    padding: 3px 10px;
-  }
-
-  /* 聊天窗口 */
-  .chat-top {
-    padding: 8px 10px;
-  }
-  .chat-title {
-    font-size: 14px;
-  }
-  .chat-back {
-    font-size: 20px;
-  }
-  .chat-more {
-    font-size: 16px;
-  }
-
-  .chat-msgs {
-    padding: 10px 8px;
-    gap: 6px;
-  }
-
-  .wx-avatar {
-    width: 24px;
-    height: 24px;
-    font-size: 13px;
-  }
-  .wx-bubble {
-    font-size: 11px;
-    padding: 5px 8px;
-    max-width: 76%;
-  }
-
-  .wx-input-bar {
-    padding: 4px 6px calc(4px + env(safe-area-inset-bottom));
-    gap: 4px;
-  }
-  .wx-input {
-    font-size: 12px;
-    padding: 6px 8px;
-  }
-  .wx-send {
-    font-size: 11px;
-    padding: 5px 10px;
-  }
-  .wx-icon {
-    font-size: 18px;
-  }
-
-  .voice-bar {
-    font-size: 12px;
-    padding: 12px;
-    margin: 0 6px calc(4px + env(safe-area-inset-bottom));
-  }
-
-  .plus-menu {
-    bottom: calc(46px + env(safe-area-inset-bottom));
-    left: 6px;
-    padding: 6px;
-    gap: 10px;
-  }
-  .plus-icon {
-    width: 34px;
-    height: 34px;
-    font-size: 16px;
-  }
-  .plus-item span {
-    font-size: 9px;
-  }
-
-  .more-menu {
-    top: 44px;
-    right: 6px;
-  }
-  .more-item {
-    padding: 8px 14px;
-    font-size: 12px;
-  }
-
-  .modal {
-    width: 260px;
-    padding: 16px;
-  }
-
-  .toast {
-    font-size: 11px;
-    padding: 4px 12px;
-    bottom: 60px;
-  }
-}
-
-/* ============================================================
-   📱 更小屏幕（宽度 ≤ 340px）
-   ============================================================ */
-@media (max-width: 340px) {
-  .home {
-    padding: 32px 8px 8px;
-  }
-
-  .home-widgets {
-    gap: 6px;
-    margin-bottom: 12px;
-    flex-wrap: wrap;
-  }
-
-  .widget-photo {
-    flex: 1 1 100%;
-  }
-  .widget-calendar {
-    flex: 1 1 40%;
-  }
-
-  .photo-placeholder {
-    height: 54px;
-    font-size: 24px;
-  }
-
-  .cal-day {
-    font-size: 24px;
-  }
-
-  .app-grid {
-    gap: 10px 6px;
-  }
-
-  .icon-bg {
-    width: 40px;
-    height: 40px;
-    font-size: 18px;
-    border-radius: 10px;
-  }
-
-  .app-name {
-    font-size: 9px;
-  }
-
-  .dock-btn {
-    font-size: 10px;
-    padding: 3px 8px;
-  }
-  .dock-home {
-    padding: 4px 12px;
-    font-size: 10px;
-  }
-
-  .profile-avatar {
-    width: 68px;
-    height: 68px;
-    font-size: 34px;
-  }
-  .profile-name {
-    font-size: 15px;
-  }
-
-  .chat-item {
-    padding: 6px 10px;
-    gap: 6px;
-  }
-  .chat-item-avatar {
-    width: 32px;
-    height: 32px;
-    font-size: 16px;
-  }
-  .chat-item-name {
-    font-size: 12px;
-  }
-  .chat-item-last {
-    font-size: 10px;
-  }
+  position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
+  background: rgba(0,0,0,.7); color: #fff;
+  font-size: 13px; padding: 8px 16px; border-radius: 16px;
+  z-index: 99; white-space: nowrap;
 }
