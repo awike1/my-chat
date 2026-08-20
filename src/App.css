@@ -316,3 +316,4 @@ body {
   font-size: 13px; padding: 8px 16px; border-radius: 16px;
   z-index: 99; white-space: nowrap;
 }
+.wx-row.user { flex-direction: row-reverse; }
