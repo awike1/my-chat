@@ -221,10 +221,19 @@ body {
 
 /* ===== 聊天窗口 ===== */
 .chat-window {
-  position: fixed; inset: 0; z-index: 20;
-  display: flex; flex-direction: column;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
   background: #fff;
 }
+
 .chat-top {
   display: flex; align-items: center; justify-content: space-between;
   padding: calc(16px + env(safe-area-inset-top)) 12px 10px;
@@ -318,3 +327,7 @@ body {
 }
 .wx-row.user { flex-direction: row-reverse; }
 .wechat-placeholder { width: 24px; }
+.wx-row.user {
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+}
