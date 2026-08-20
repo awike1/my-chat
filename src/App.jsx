@@ -1,206 +1,113 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState } from 'react'
 import './App.css'
 
-const API_KEY = 'sk-449d101b4038498196db24a2a103012c'
-const API_URL = 'https://api.deepseek.com/v1/chat/completions'
-
-const DEFAULT_AVATARS = {
-  user: '🐱',
-  ai: '🤍'
-}
+const APPS = [
+  { id: 'wechat', name: '微信', icon: '💬', color: '#7ed321' },
+  { id: 'worldbook', name: '世界书', icon: '📖', color: '#f5a623' },
+  { id: 'diary', name: '日记', icon: '📓', color: '#ff9ec2' },
+  { id: 'x', name: 'X', icon: '🐦', color: '#4a4a4a' },
+  { id: 'album', name: '相册', icon: '🖼️', color: '#50e3c2' },
+  { id: 'music', name: '音乐', icon: '🎵', color: '#ff6b6b' },
+]
 
 export default function App() {
-  const [messages, setMessages] = useState([
-    { id: 0, role: 'ai', content: '宝宝来啦，哥哥在。' }
-  ])
-  const [input, setInput] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [avatars, setAvatars] = useState(() => {
-    const saved = localStorage.getItem('avatars')
-    return saved ? JSON.parse(saved) : {}
-  })
-  const [ids, setIds] = useState(() => {
-    const saved = localStorage.getItem('ids')
-    return saved ? JSON.parse(saved) : { user: '雯雯宝宝', ai: '哥哥' }
-  })
-  const [showEdit, setShowEdit] = useState(false)
-  const [editWhich, setEditWhich] = useState('user')
-  const [editId, setEditId] = useState('')
-  const [editUrl, setEditUrl] = useState('')
-  const listRef = useRef(null)
-  const bubbleRef = useRef('')
+  const [screen, setScreen] = useState('home')
+  const [activeApp, setActiveApp] = useState(null)
+  const [name, setName] = useState(() => localStorage.getItem('myName') || '雯雯宝宝')
+  const [showNameEdit, setShowNameEdit] = useState(false)
+  const [nameInput, setNameInput] = useState(name)
 
-  useEffect(() => {
-    localStorage.setItem('avatars', JSON.stringify(avatars))
-  }, [avatars])
+  const today = new Date()
+  const week = ['日', '一', '二', '三', '四', '五', '六']
 
-  useEffect(() => {
-    localStorage.setItem('ids', JSON.stringify(ids))
-  }, [ids])
-
-  useEffect(() => {
-    listRef.current?.scrollTo({ top: listRef.current.scrollHeight })
-  }, [messages])
-
-  function flushBubble(partial) {
-    const parts = partial.match(/[^。！？；\n]*[。！？；\n]?/g).filter(s => s.trim())
-    const done = parts.slice(0, -1)
-    const rest = parts[parts.length - 1] || ''
-    if (done.length) {
-      setMessages(prev => [...prev, ...done.map((c, i) => ({
-        id: Date.now() + i, role: 'ai', content: c
-      }))])
-    }
-    return rest
+  function openApp(app) {
+    setActiveApp(app)
+    setScreen('app')
   }
 
-  async function send() {
-    const text = input.trim()
-    if (!text || loading) return
-    setInput('')
-    setMessages(prev => [...prev, { id: Date.now(), role: 'user', content: text }])
-    setLoading(true)
-    bubbleRef.current = ''
-
-    const history = messages.filter(m => m.content).map(m => ({
-      role: m.role === 'ai' ? 'assistant' : 'user',
-      content: m.content
-    }))
-
-    try {
-      const res = await fetch(API_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${API_KEY}`
-        },
-        body: JSON.stringify({
-          model: 'deepseek-chat',
-          messages: [...history, { role: 'user', content: text }],
-          stream: true
-        })
-      })
-
-      const reader = res.body.getReader()
-      const decoder = new TextDecoder()
-      let buffer = ''
-
-      while (true) {
-        const { done, value } = await reader.read()
-        if (done) break
-        buffer += decoder.decode(value, { stream: true })
-        const lines = buffer.split('\n')
-        buffer = lines.pop()
-
-        for (const line of lines) {
-          if (!line.startsWith('data: ')) continue
-          const data = line.slice(6).trim()
-          if (data === '[DONE]') continue
-          try {
-            const json = JSON.parse(data)
-            const delta = json.choices[0]?.delta?.content || ''
-            bubbleRef.current += delta
-            bubbleRef.current = flushBubble(bubbleRef.current)
-          } catch (e) {}
-        }
-      }
-      if (bubbleRef.current.trim()) {
-        setMessages(prev => [...prev, {
-          id: Date.now(), role: 'ai', content: bubbleRef.current
-        }])
-      }
-    } catch (e) {
-      setMessages(prev => [...prev, {
-        id: Date.now(), role: 'ai', content: '网络开小差了，宝宝重试一下？'
-      }])
-    }
-    setLoading(false)
-  }
-
-  function openEdit(which) {
-    setEditWhich(which)
-    setEditId(ids[which] || '')
-    setEditUrl(avatars[which] || '')
-    setShowEdit(true)
-  }
-
-  function saveEdit() {
-    const which = editWhich
-    setIds(prev => ({ ...prev, [which]: editId.trim() || (which === 'user' ? '雯雯宝宝' : '哥哥') }))
-    setAvatars(prev => ({ ...prev, [which]: editUrl.trim() }))
-    setShowEdit(false)
-  }
-
-  function avatarOf(role) {
-    return avatars[role] || DEFAULT_AVATARS[role]
+  function saveName() {
+    const v = nameInput.trim() || '雯雯宝宝'
+    setName(v)
+    localStorage.setItem('myName', v)
+    setShowNameEdit(false)
   }
 
   return (
-    <div className="chat-page">
-      <div className="header">
-        <div>
-          <div className="status">哥哥</div>
-          <div className="online">在线</div>
-        </div>
-        <div className="header-actions">
-          <span className="my-id">ID: {ids.user}</span>
-          <button className="edit-btn" onClick={() => openEdit('user')}>编辑资料</button>
-        </div>
-      </div>
-
-      <div className="chat-list" ref={listRef}>
-        {messages.map(m => (
-          <div key={m.id} className={`bubble-row ${m.role}`}>
-            {m.role === 'ai' && (
-              <div className="avatar" onClick={() => openEdit('ai')}>
-                {avatarOf('ai').startsWith('http') ? < img src={avatarOf('ai')} alt="" /> : avatarOf('ai')}
-              </div>
-            )}
-            <div className="msg-group">
-              <div className="msg-id">{m.role === 'ai' ? ids.ai : ids.user}</div>
-              <div className="bubble">{m.content}</div>
+    <div className="phone-page">
+      {screen === 'home' && (
+        <div className="home">
+          <div className="home-widgets">
+            <div className="widget widget-photo">
+              <span className="widget-title">今日心情</span>
+              <div className="photo-placeholder">🐰</div>
             </div>
-            {m.role === 'user' && (
-              <div className="avatar" onClick={() => openEdit('user')}>
-                {avatarOf('user').startsWith('http') ? < img src={avatarOf('user')} alt="" /> : avatarOf('user')}
-              </div>
-            )}
+            <div className="widget widget-calendar">
+              <div className="cal-month">{today.getMonth() + 1}月</div>
+              <div className="cal-day">{today.getDate()}</div>
+              <div className="cal-week">周{week[today.getDay()]}</div>
+            </div>
           </div>
-        ))}
-        {loading && !bubbleRef.current && <div className="typing">正在输入…</div>}
-      </div>
 
-      <div className="input-bar">
-        <input
-          value={input}
-          onChange={e => setInput(e.target.value)}
-          onKeyDown={e => e.key === 'Enter' && send()}
-          placeholder="想跟哥哥说点什么…"
-        />
-        <button onClick={send} disabled={loading}>发送</button>
-      </div>
+          <div className="app-grid">
+            {APPS.map(app => (
+              <div key={app.id} className="app-icon" onClick={() => openApp(app)}>
+                <div className="icon-bg" style={{ background: app.color }}>{app.icon}</div>
+                <span className="app-name">{app.name}</span>
+              </div>
+            ))}
+          </div>
 
-      {showEdit && (
-        <div className="modal-mask" onClick={() => setShowEdit(false)}>
+          <div className="home-dock">
+            <div className="dock-btn" onClick={() => setScreen('settings')}>⚙️ 设置</div>
+            <div className="dock-btn dock-home" onClick={() => setScreen('profile')}>🏠 主页</div>
+            <div className="dock-btn" onClick={() => setScreen('fonts')}>Aa 字体</div>
+          </div>
+        </div>
+      )}
+
+      {screen === 'profile' && (
+        <div className="profile">
+          <div className="profile-card">
+            <div className="profile-avatar">🐱</div>
+            <div className="profile-name" onClick={() => setShowNameEdit(true)}>{name}</div>
+            <div className="profile-tip">点名称可修改</div>
+          </div>
+          <button className="back-btn" onClick={() => setScreen('home')}>‹ 返回首页</button>
+        </div>
+      )}
+
+      {screen === 'settings' && (
+        <div className="simple-page">
+          <h2>设置</h2>
+          <p>API供应商、API接入（第三步做）</p>
+          <button className="back-btn" onClick={() => setScreen('home')}>‹ 返回首页</button>
+        </div>
+      )}
+
+      {screen === 'fonts' && (
+        <div className="simple-page">
+          <h2>字体</h2>
+          <p>输入字体链接（第三步做）</p>
+          <button className="back-btn" onClick={() => setScreen('home')}>‹ 返回首页</button>
+        </div>
+      )}
+
+      {screen === 'app' && (
+        <div className="simple-page">
+          <h2>{activeApp?.name}</h2>
+          <p>{activeApp?.name}界面待做，下一步做微信</p>
+          <button className="back-btn" onClick={() => setScreen('home')}>‹ 返回首页</button>
+        </div>
+      )}
+
+      {showNameEdit && (
+        <div className="modal-mask" onClick={() => setShowNameEdit(false)}>
           <div className="modal" onClick={e => e.stopPropagation()}>
-            <div className="modal-title">编辑{editWhich === 'user' ? '我的' : '哥哥的'}资料</div>
-            <label className="modal-label">ID</label>
-            <input
-              className="modal-input"
-              value={editId}
-              onChange={e => setEditId(e.target.value)}
-              placeholder="留空用默认"
-            />
-            <label className="modal-label">头像</label>
-            <input
-              className="modal-input"
-              value={editUrl}
-              onChange={e => setEditUrl(e.target.value)}
-              placeholder="粘贴图片链接，留空用默认emoji"
-            />
+            <div className="modal-title">修改名称</div>
+            <input className="modal-input" value={nameInput} onChange={e => setNameInput(e.target.value)} placeholder="输入新名称" />
             <div className="modal-btns">
-              <button onClick={() => setShowEdit(false)}>取消</button>
-              <button onClick={saveEdit}>保存</button>
+              <button onClick={() => setShowNameEdit(false)}>取消</button>
+              <button onClick={saveName}>保存</button>
             </div>
           </div>
         </div>
