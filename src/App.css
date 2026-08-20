@@ -5,10 +5,10 @@ body {
 }
 
 .phone-page {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  position: relative;
+  max-width: 480px;
+  margin: 0 auto;
+  height: 100dvh;
   overflow: hidden;
   background: linear-gradient(160deg, #fdf2f8, #f3e8ff, #e8e3f0);
   display: flex;
@@ -221,19 +221,13 @@ body {
 
 /* ===== 聊天窗口 ===== */
 .chat-window {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 480px;
+  position: absolute;
+  inset: 0;
   z-index: 20;
   display: flex;
   flex-direction: column;
   background: #fff;
 }
-
 .chat-top {
   display: flex; align-items: center; justify-content: space-between;
   padding: calc(16px + env(safe-area-inset-top)) 12px 10px;
