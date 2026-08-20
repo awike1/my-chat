@@ -79,7 +79,11 @@ export default function App() {
   const today = new Date()
   const week = ['日', '一', '二', '三', '四', '五', '六']
 
-  function openApp(app) { setActiveApp(app); setScreen('app') }
+  function openApp(app) {
+  if (app.id === 'wechat') { setActiveApp(app); setScreen('wechat'); return }
+  setActiveApp(app); setScreen('app')
+}
+
 
   function saveName() {
     const v = nameInput.trim() || '雯雯宝宝'
