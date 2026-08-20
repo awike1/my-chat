@@ -5,14 +5,16 @@ body {
 }
 
 .phone-page {
-  max-width: 480px;
-  margin: 0 auto;
-  height: 100dvh;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
   background: linear-gradient(160deg, #fdf2f8, #f3e8ff, #e8e3f0);
   display: flex;
   flex-direction: column;
 }
+
 
 /* ===== 首页 ===== */
 .home {
